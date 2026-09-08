@@ -1,0 +1,1 @@
+Os componentes maiores que representam uma tela inteira (ex: Login.tsx, Dashboard.tsx). Eles apenas "montam" os componentes menores

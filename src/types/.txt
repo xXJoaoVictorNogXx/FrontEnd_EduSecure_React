@@ -1,0 +1,1 @@
+Interfaces TypeScript (ex: SincronizacaoRequestDTO.ts, Prova.ts). É aqui que o back e o front "conversam" na mesma tipagem

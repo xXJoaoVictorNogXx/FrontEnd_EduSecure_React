@@ -1,0 +1,1 @@
+Arquivos de comunicação externa, como a configuração do Axios (api.ts) e as chamadas para o backend 
