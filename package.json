@@ -15,15 +15,19 @@
     "check": "prettier --check ."
   },
   "dependencies": {
+    "@base-ui/react": "^1.8.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-query": "^5.102.8",
     "@tanstack/react-router": "latest",
     "@tanstack/react-router-devtools": "^1.167.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "cn": "^0.2.6",
     "lucide-react": "^1.43.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
