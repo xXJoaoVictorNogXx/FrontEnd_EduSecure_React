@@ -1,15 +1,15 @@
 // src/pages/Dashboard.tsx
-import { useQuery } from "@tanstack/react-query";
-import { api } from "@/services/api";
-import { Button } from "@/components/ui/button";
-import { Sidebar } from "@/components/shared/Sidebar";
-import type { Prova } from "@/types/Prova";
+import { useQuery } from '@tanstack/react-query'
+import { api } from '@/services/api'
+import { Button } from '@/components/ui/button'
+import { Sidebar } from '@/components/shared/Sidebar'
+import type { Prova } from '#/types/prova'
 
 // Função isolada para buscar os dados no backend
 const fetchProvas = async (): Promise<Prova[]> => {
-  const response = await api.get("/provas/sincronizadas");
-  return response.data;
-};
+  const response = await api.get('/provas/sincronizadas')
+  return response.data
+}
 
 export default function Dashboard() {
   // A mágica do TanStack Query acontece aqui:
@@ -18,9 +18,9 @@ export default function Dashboard() {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["provas-sincronizadas"],
+    queryKey: ['provas-sincronizadas'],
     queryFn: fetchProvas,
-  });
+  })
 
   return (
     <div className="flex h-screen bg-slate-50">
@@ -53,5 +53,5 @@ export default function Dashboard() {
         )}
       </main>
     </div>
-  );
+  )
 }
