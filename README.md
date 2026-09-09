@@ -1,75 +1,62 @@
-# React + TypeScript + Vite
+# EduSecure - Painel Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o repositório front-end do painel administrativo web do sistema **EduSecure**. O painel é responsável por consumir a API do backend (Spring Boot) para exibir as sincronizações de provas offline, gerenciar alunos e monitorar os status de envio com regras antifraude.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Tecnologias Utilizadas
 
-## React Compiler
+O projeto foi inicializado com foco em performance, tipagem estática e componentes reutilizáveis, utilizando a seguinte stack:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **[React](https://react.dev/) + [Vite](https://vitejs.dev/)**: Biblioteca principal e bundler ultrarrápido.
+* **[TypeScript](https://www.typescriptlang.org/)**: Tipagem estática para garantir integridade na comunicação com o backend.
+* **[Tailwind CSS](https://tailwindcss.com/)**: Estilização utilitária e responsiva.
+* **[shadcn/ui](https://ui.shadcn.com/)**: Biblioteca de componentes acessíveis e customizáveis (arquitetura copy-paste).
+* **[TanStack Query (React Query)](https://tanstack.com/query/latest)**: Gerenciamento de estado assíncrono, cache e requisições.
+* **[Axios](https://axios-http.com/)**: Cliente HTTP para comunicação com a API.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📁 Estrutura de Pastas
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+A arquitetura do projeto foi desenhada para separar claramente responsabilidades, seguindo as melhores práticas para SPA:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```text
+src/
+├── assets/        # Arquivos estáticos e CSS global (Tailwind)
+├── components/    # Componentes visuais
+│   ├── shared/    # Componentes globais (Ex: Sidebar, Header)
+│   └── ui/        # Componentes gerados pelo shadcn/ui
+├── hooks/         # Hooks customizados do React
+├── lib/           # Funções utilitárias (Ex: cn do Tailwind)
+├── pages/         # Telas principais da aplicação (Ex: Dashboard, Login)
+├── services/      # Configuração do Axios e chamadas à API
+└── types/         # Interfaces e tipagens (Ex: Prova, SincronizacaoDTO)
+⚙️ Instalação e Execução
+Pré-requisitos
+Node.js instalado.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Backend do EduSecure rodando localmente (padrão na porta 8080).
 
-```
+Passos para rodar localmente
+Clone o repositório e acesse a pasta do front-end:
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Bash
+git clone <url-do-repositorio>
+cd edusecure-web
+Instale as dependências do projeto:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Bash
+npm install
+Inicie o servidor de desenvolvimento:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Bash
+npm run dev
+Acesse a aplicação no navegador em http://localhost:5173.
 
-```
+🛠️ Configurações Importantes Realizadas
+Path Aliases (@/): Configurado nos arquivos vite.config.ts, tsconfig.json e tsconfig.app.json para facilitar importações relativas sem uso excessivo de ../.
+
+Provedor Global: O QueryClientProvider do TanStack Query está configurado no arquivo raiz (main.tsx).
+
+Instância da API: O Axios está configurado em src/services/api.ts com a Base URL do Spring Boot preparada para receber interceptors futuramente.
