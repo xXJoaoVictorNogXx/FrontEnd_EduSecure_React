@@ -2,12 +2,11 @@ import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
-// 1. Importe os componentes do shadcn e os seus componentes customizados
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/shared/app-sidebar'
 import { Header } from '@/components/shared/Header'
 
-import '../styles.css'
+import '../index.css'
 
 export const Route = createRootRoute({
   component: RootComponent,

@@ -5,7 +5,6 @@ import { UserFooter } from './sidebar-footer'
 
 export function AppSidebar() {
   return (
-    // 'collapsible="icon"' faz a sidebar encolher virando apenas ícones em telas menores
     <Sidebar collapsible="icon">
       <BrandHeader />
 
