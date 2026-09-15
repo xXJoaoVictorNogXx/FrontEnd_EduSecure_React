@@ -10,8 +10,8 @@ import { Link } from '@tanstack/react-router'
 
 const items = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
-  { title: 'Usuários', url: '/users', icon: Users },
-  { title: 'Configurações', url: '/settings', icon: Settings },
+  { title: 'Banco de Questões', url: '/bancoDeQuestoes', icon: Users },
+  { title: 'Correções', url: '/correcoes', icon: Settings },
 ]
 
 export function MainNavigation() {
@@ -21,12 +21,11 @@ export function MainNavigation() {
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>
-            {/* activeProps do TanStack adiciona estilos quando a rota está ativa */}
-            <SidebarMenuButton asChild tooltip={item.title}>
+            <SidebarMenuButton asChild tooltip={item.title} className="">
               <Link
                 to={item.url}
                 activeProps={{
-                  className: 'bg-sidebar-accent text-sidebar-accent-foreground',
+                  className: 'flex items-center gap-2 ',
                 }}
               >
                 <item.icon />
