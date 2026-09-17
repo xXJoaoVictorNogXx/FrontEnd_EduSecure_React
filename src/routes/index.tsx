@@ -1,8 +1,9 @@
+import DashboardScreen from '@/pages/DashboardScreen'
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/')({ component: Home })
+export const Route = createFileRoute('/')({ component: Dashboard })
 
-function Home() {
+function Dashboard() {
   return (
     <div className="p-8">
       <h1 className="text-4xl font-bold">Welcome to TanStack Start</h1>

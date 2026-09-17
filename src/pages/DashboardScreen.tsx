@@ -1,13 +1,7 @@
 // src/pages/Dashboard.tsx
 import { useQuery } from '@tanstack/react-query'
-import { api } from '@/services/api'
 import { Button } from '@/components/ui/button'
-import type { Prova } from '#/types/prova'
-
-const fetchProvas = async (): Promise<Prova[]> => {
-  const response = await api.get('/provas/sincronizadas')
-  return response.data
-}
+import { fetchProvas } from '#/services/provas'
 
 export default function Dashboard() {
   const {
