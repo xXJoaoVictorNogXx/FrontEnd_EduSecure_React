@@ -10,33 +10,102 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardRouteRouteImport } from './routes/dashboard/route'
+import { Route as QuestionsRouteRouteImport } from './routes/questions/route'
+import { Route as SettingsRouteRouteImport } from './routes/settings/route'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as QuestionsIndexRouteImport } from './routes/questions/index'
+import { Route as SettingsIndexRouteImport } from './routes/settings/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRouteRoute = DashboardRouteRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuestionsRouteRoute = QuestionsRouteRouteImport.update({
+  id: '/questions',
+  path: '/questions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRouteRoute = SettingsRouteRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
+const QuestionsIndexRoute = QuestionsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => QuestionsRouteRoute,
+} as any)
+const SettingsIndexRoute = SettingsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SettingsRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/questions': typeof QuestionsRouteRouteWithChildren
+  '/settings': typeof SettingsRouteRouteWithChildren
+  '/dashboard/': typeof DashboardIndexRoute
+  '/questions/': typeof QuestionsIndexRoute
+  '/settings/': typeof SettingsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/questions': typeof QuestionsIndexRoute
+  '/settings': typeof SettingsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/questions': typeof QuestionsRouteRouteWithChildren
+  '/settings': typeof SettingsRouteRouteWithChildren
+  '/dashboard/': typeof DashboardIndexRoute
+  '/questions/': typeof QuestionsIndexRoute
+  '/settings/': typeof SettingsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/questions'
+    | '/settings'
+    | '/dashboard/'
+    | '/questions/'
+    | '/settings/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/dashboard' | '/questions' | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/questions'
+    | '/settings'
+    | '/dashboard/'
+    | '/questions/'
+    | '/settings/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
+  QuestionsRouteRoute: typeof QuestionsRouteRouteWithChildren
+  SettingsRouteRoute: typeof SettingsRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +117,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/questions': {
+      id: '/questions'
+      path: '/questions'
+      fullPath: '/questions'
+      preLoaderRoute: typeof QuestionsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
+    '/questions/': {
+      id: '/questions/'
+      path: '/'
+      fullPath: '/questions/'
+      preLoaderRoute: typeof QuestionsIndexRouteImport
+      parentRoute: typeof QuestionsRouteRoute
+    }
+    '/settings/': {
+      id: '/settings/'
+      path: '/'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof SettingsIndexRouteImport
+      parentRoute: typeof SettingsRouteRoute
+    }
   }
 }
 
+interface DashboardRouteRouteChildren {
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
+  DashboardRouteRouteChildren,
+)
+
+interface QuestionsRouteRouteChildren {
+  QuestionsIndexRoute: typeof QuestionsIndexRoute
+}
+
+const QuestionsRouteRouteChildren: QuestionsRouteRouteChildren = {
+  QuestionsIndexRoute: QuestionsIndexRoute,
+}
+
+const QuestionsRouteRouteWithChildren = QuestionsRouteRoute._addFileChildren(
+  QuestionsRouteRouteChildren,
+)
+
+interface SettingsRouteRouteChildren {
+  SettingsIndexRoute: typeof SettingsIndexRoute
+}
+
+const SettingsRouteRouteChildren: SettingsRouteRouteChildren = {
+  SettingsIndexRoute: SettingsIndexRoute,
+}
+
+const SettingsRouteRouteWithChildren = SettingsRouteRoute._addFileChildren(
+  SettingsRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRouteRoute: DashboardRouteRouteWithChildren,
+  QuestionsRouteRoute: QuestionsRouteRouteWithChildren,
+  SettingsRouteRoute: SettingsRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

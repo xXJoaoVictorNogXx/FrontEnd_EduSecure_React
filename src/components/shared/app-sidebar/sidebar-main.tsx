@@ -9,9 +9,9 @@ import { LayoutDashboard, Settings, Users } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 
 const items = [
-  { title: 'Dashboard', url: '/', icon: LayoutDashboard },
-  { title: 'Banco de Questões', url: '/bancoDeQuestoes', icon: Users },
-  { title: 'Correções', url: '/correcoes', icon: Settings },
+  { title: 'Dashboard', url: '/dashboard', icon: LayoutDashboard },
+  { title: 'Banco de Questões', url: '/questions', icon: Users },
+  { title: 'Correções', url: '/settings', icon: Settings },
 ]
 
 export function MainNavigation() {
@@ -20,16 +20,21 @@ export function MainNavigation() {
       <SidebarGroupLabel>Plataforma</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild tooltip={item.title} className="">
+          <SidebarMenuItem
+            key={item.title}
+            className="flex items-center text-sm font-medium rounded-md hover:bg-muted "
+          >
+            <SidebarMenuButton asChild tooltip={item.title}>
               <Link
                 to={item.url}
                 activeProps={{
-                  className: 'flex items-center gap-2 ',
+                  className: ' ',
                 }}
               >
-                <item.icon />
-                <span>{item.title}</span>
+                <span className="flex items-center gap-2">
+                  <item.icon />
+                  {item.title}
+                </span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
