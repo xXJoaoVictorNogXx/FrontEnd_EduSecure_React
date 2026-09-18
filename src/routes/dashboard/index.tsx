@@ -1,4 +1,4 @@
-import DashboardScreen from '#/pages/DashboardScreen'
+import DashboardScreen from '#/pages/dashboard/DashboardScreen'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/dashboard/')({
