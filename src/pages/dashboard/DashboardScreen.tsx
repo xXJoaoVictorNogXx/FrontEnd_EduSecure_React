@@ -17,6 +17,8 @@ export default function Dashboard() {
           <div>
             <SectionCards />
           </div>
+        </section>
+        <section className="p-8">
           <div>
             <ChartBarInteractive />
           </div>
