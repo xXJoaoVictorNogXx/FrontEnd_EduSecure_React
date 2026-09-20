@@ -1,3 +1,4 @@
+import { useDashboard } from '#/hooks/use-dashboard'
 import { Badge } from '@/components/ui/badge'
 import {
   Card,
@@ -7,82 +8,83 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Database, FileText, Target, Users } from 'lucide-react'
 
 export function SectionCards() {
+  const { data, isLoading, isError } = useDashboard()
+
   return (
-    <div className="grid grid-cols-4 gap-4 @container/main:grid-cols-2 @5xl/main:grid-cols-4 w-full">
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>Total Revenue</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">+12.5%</Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month
-          </div>
-          <div className="text-muted-foreground">
-            Visitors for the last 6 months
-          </div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>New Customers</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            1,234
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">-20%</Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Down 20% this period
-          </div>
-          <div className="text-muted-foreground">
-            Acquisition needs attention
-          </div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>Active Accounts</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            45,678
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">+12.5%</Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Strong user retention
-          </div>
-          <div className="text-muted-foreground">Engagement exceed targets</div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>Growth Rate</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            4.5%
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">+4.5%</Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Steady performance increase
-          </div>
-          <div className="text-muted-foreground">Meets growth projections</div>
-        </CardFooter>
-      </Card>
+    <div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : isError ? (
+        <div>Error occurred while fetching data.</div>
+      ) : (
+        <div className="grid grid-cols-4 gap-4 @container/main:grid-cols-2 @5xl/main:grid-cols-4 w-full">
+          <Card className="@container/card">
+            <CardHeader>
+              <CardDescription className="flex bg-blue-100 rounded p-2 w-fit">
+                <FileText className="h-5 w-5 text-blue-500" />
+              </CardDescription>
+              <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                {data?.provasAplicadas}
+              </CardTitle>
+              <CardAction>{data?.provasTrend}</CardAction>
+            </CardHeader>
+            <CardFooter className="flex-col items-start gap-1.5 text-sm">
+              <div className="line-clamp-1 flex gap-2 font-medium">
+                provas aplicadas
+              </div>
+            </CardFooter>
+          </Card>
+          <Card className="@container/card">
+            <CardHeader>
+              <CardDescription className="flex bg-green-100 rounded p-2 w-fit">
+                <Target className="h-5 w-5 text-green-500" />
+              </CardDescription>
+              <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                {data?.mediaTurma}
+              </CardTitle>
+              <CardAction>{data?.mediaTrend}</CardAction>
+            </CardHeader>
+            <CardFooter className="flex-col items-start gap-1.5 text-sm">
+              <div className="line-clamp-1 flex gap-2 font-medium">
+                Média por Turma
+              </div>
+            </CardFooter>
+          </Card>
+          <Card className="@container/card">
+            <CardHeader>
+              <CardDescription className="flex bg-yellow-100 rounded p-2 w-fit">
+                <Users className="h-5 w-5 text-yellow-500" />
+              </CardDescription>
+              <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                {data?.taxaConclusao}
+              </CardTitle>
+            </CardHeader>
+            <CardFooter className="flex-col items-start gap-1.5 text-sm">
+              <div className="line-clamp-1 flex gap-2 font-medium">
+                Taxa de Conclusão
+              </div>
+            </CardFooter>
+          </Card>
+          <Card className="@container/card">
+            <CardHeader>
+              <CardDescription className="flex bg-purple-100 rounded p-2 w-fit">
+                <Database className="h-5 w-5 text-purple-500" />
+              </CardDescription>
+              <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                {data?.questoesBanco}
+              </CardTitle>
+            </CardHeader>
+            <CardFooter className="flex-col items-start gap-1.5 text-sm">
+              <div className="line-clamp-1 flex gap-2 font-medium">
+                Questões no Banco
+              </div>
+            </CardFooter>
+          </Card>
+        </div>
+      )}
     </div>
   )
 }
