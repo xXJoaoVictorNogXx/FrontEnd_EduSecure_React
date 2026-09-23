@@ -23,13 +23,13 @@ export function SectionCards() {
         <div className="grid grid-cols-4 gap-4 @container/main:grid-cols-2 @5xl/main:grid-cols-4 w-full">
           <Card className="@container/card">
             <CardHeader>
-              <CardDescription className="flex bg-blue-100 rounded p-2 w-fit">
-                <FileText className="h-5 w-5 text-blue-500" />
+              <CardDescription className="flex   p-2 w-fit">
+                Progresso da Turma
               </CardDescription>
               <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-                {data?.provasAplicadas}
+                {data?.progresso.concluidas}
               </CardTitle>
-              <CardAction>{data?.provasTrend}</CardAction>
+              <CardAction></CardAction>
             </CardHeader>
             <CardFooter className="flex-col items-start gap-1.5 text-sm">
               <div className="line-clamp-1 flex gap-2 font-medium">
