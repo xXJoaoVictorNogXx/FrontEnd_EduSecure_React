@@ -12,9 +12,11 @@ export interface OpenTdbResponseWrapperDTO {
   results: OpenTdbQuestaoDTO[]
 }
 
+export type CategoriaQuestoes = string;
+
 export interface QuestaoFrontEndDTO {
-  id: number
-  categoria: string
+  idQuestao: string
+  categoria: CategoriaQuestoes
   dificuldade: string
   enunciado: string
   alternativas: string[]

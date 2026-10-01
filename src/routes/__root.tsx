@@ -25,7 +25,7 @@ function RootComponent() {
               <Header />
             </header>
 
-            <main className="flex-1 p-6">
+            <main className="flex-1 flex flex-col">
               <Outlet />
             </main>
           </div>
