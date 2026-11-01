@@ -1,9 +1,3 @@
-import react from 'react'
+import CorrectionScreen from './CorrectionScreen'
 
-export default function Settings() {
-  return (
-    <div>
-      <h1>Settings</h1>
-    </div>
-  )
-}
+export default CorrectionScreen

@@ -5,13 +5,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
-import { LayoutDashboard, Settings, Users } from 'lucide-react'
+import { LayoutDashboard, FileCheck2, Users } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 
 const items = [
   { title: 'Dashboard', url: '/dashboard', icon: LayoutDashboard },
   { title: 'Banco de Questões', url: '/questions', icon: Users },
-  { title: 'Correções', url: '/settings', icon: Settings },
+  { title: 'Correções', url: '/settings', icon: FileCheck2 },
 ]
 
 export function MainNavigation() {

@@ -1,10 +1,8 @@
-import SettingsScreen from '#/pages/SettingsScreen'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/settings')({
-  component: SettingsScreen,
+  staticData: {
+    breadcrumb: 'Correções',
+  },
+  component: () => <Outlet />,
 })
-
-function RouteComponent() {
-  return <div>Hello "/dashboard/"!</div>
-}

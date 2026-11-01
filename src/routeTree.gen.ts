@@ -15,6 +15,7 @@ import { Route as QuestionsRouteRouteImport } from './routes/questions/route'
 import { Route as SettingsRouteRouteImport } from './routes/settings/route'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as QuestionsIndexRouteImport } from './routes/questions/index'
+import { Route as QuestionsNewRouteImport } from './routes/questions/new'
 import { Route as SettingsIndexRouteImport } from './routes/settings/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +48,11 @@ const QuestionsIndexRoute = QuestionsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => QuestionsRouteRoute,
 } as any)
+const QuestionsNewRoute = QuestionsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => QuestionsRouteRoute,
+} as any)
 const SettingsIndexRoute = SettingsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -58,12 +64,14 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/questions': typeof QuestionsRouteRouteWithChildren
   '/settings': typeof SettingsRouteRouteWithChildren
+  '/questions/new': typeof QuestionsNewRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/questions/': typeof QuestionsIndexRoute
   '/settings/': typeof SettingsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/questions/new': typeof QuestionsNewRoute
   '/dashboard': typeof DashboardIndexRoute
   '/questions': typeof QuestionsIndexRoute
   '/settings': typeof SettingsIndexRoute
@@ -74,6 +82,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/questions': typeof QuestionsRouteRouteWithChildren
   '/settings': typeof SettingsRouteRouteWithChildren
+  '/questions/new': typeof QuestionsNewRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/questions/': typeof QuestionsIndexRoute
   '/settings/': typeof SettingsIndexRoute
@@ -85,17 +94,19 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/questions'
     | '/settings'
+    | '/questions/new'
     | '/dashboard/'
     | '/questions/'
     | '/settings/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/questions' | '/settings'
+  to: '/' | '/questions/new' | '/dashboard' | '/questions' | '/settings'
   id:
     | '__root__'
     | '/'
     | '/dashboard'
     | '/questions'
     | '/settings'
+    | '/questions/new'
     | '/dashboard/'
     | '/questions/'
     | '/settings/'
@@ -152,6 +163,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuestionsIndexRouteImport
       parentRoute: typeof QuestionsRouteRoute
     }
+    '/questions/new': {
+      id: '/questions/new'
+      path: '/new'
+      fullPath: '/questions/new'
+      preLoaderRoute: typeof QuestionsNewRouteImport
+      parentRoute: typeof QuestionsRouteRoute
+    }
     '/settings/': {
       id: '/settings/'
       path: '/'
@@ -175,10 +193,12 @@ const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
 )
 
 interface QuestionsRouteRouteChildren {
+  QuestionsNewRoute: typeof QuestionsNewRoute
   QuestionsIndexRoute: typeof QuestionsIndexRoute
 }
 
 const QuestionsRouteRouteChildren: QuestionsRouteRouteChildren = {
+  QuestionsNewRoute: QuestionsNewRoute,
   QuestionsIndexRoute: QuestionsIndexRoute,
 }
 
