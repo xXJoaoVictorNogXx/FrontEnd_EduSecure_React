@@ -31,6 +31,7 @@ export interface CriarQuestaoDTO {
   enunciado: string
   tipo?: string
   disciplina: string
+  categoria?: string
   peso: number
   alternativas: string[]
   alternativaCorreta: string

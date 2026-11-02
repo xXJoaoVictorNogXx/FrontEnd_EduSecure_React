@@ -9,6 +9,7 @@ import {
   Plus,
   Trash2,
   Loader2,
+  X,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
@@ -28,7 +29,31 @@ export default function CreateQuestionScreen() {
   const [enunciado, setEnunciado] = useState('')
   const [tipo, setTipo] = useState('Múltipla Escolha')
   const [disciplina, setDisciplina] = useState('AED-301')
+  const [dificuldade, setDificuldade] = useState('Médio')
   const [peso, setPeso] = useState<number | string>(1)
+  const [tags, setTags] = useState<string[]>(['#Complexidade'])
+  const [tagInput, setTagInput] = useState('')
+
+  const handleAddTag = () => {
+    const trimmed = tagInput.trim()
+    if (!trimmed) return
+    const formattedTag = trimmed.startsWith('#') ? trimmed : `#${trimmed}`
+    if (!tags.includes(formattedTag)) {
+      setTags((prev) => [...prev, formattedTag])
+    }
+    setTagInput('')
+  }
+
+  const handleKeyDownTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault()
+      handleAddTag()
+    }
+  }
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    setTags((prev) => prev.filter((t) => t !== tagToRemove))
+  }
 
   const [alternativas, setAlternativas] = useState<AlternativeItem[]>([
     { id: '1', texto: '' },
@@ -88,11 +113,12 @@ export default function CreateQuestionScreen() {
         enunciado: enunciado.trim(),
         tipo,
         disciplina,
+        categoria: disciplina,
         peso: Number(peso) || 1,
         alternativas: alternativas.map((a) => a.texto.trim()),
         alternativaCorreta: corretaObj.texto.trim(),
-        dificuldade: 'Médio',
-        tags: [`#${disciplina}`],
+        dificuldade,
+        tags: tags.length > 0 ? tags : [`#${disciplina}`],
       },
       {
         onSuccess: () => {
@@ -105,7 +131,6 @@ export default function CreateQuestionScreen() {
   return (
     <div className="flex-1 overflow-y-auto bg-muted/20 p-6 lg:p-8">
       <div className="max-w-6xl mx-auto space-y-6">
-        {/* Top Header Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-4">
             <button
@@ -156,9 +181,7 @@ export default function CreateQuestionScreen() {
           </div>
         </div>
 
-        {/* Content Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-          {/* Left Column (Content) */}
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-card border border-border rounded-2xl p-6 shadow-xs space-y-6">
               <div>
@@ -170,7 +193,6 @@ export default function CreateQuestionScreen() {
                 </p>
               </div>
 
-              {/* Enunciado Field */}
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-foreground">
                   Enunciado
@@ -188,7 +210,6 @@ export default function CreateQuestionScreen() {
                 </div>
               </div>
 
-              {/* Alternativas Section */}
               <div className="space-y-3 pt-2">
                 <div className="flex items-center justify-between">
                   <div>
@@ -213,15 +234,13 @@ export default function CreateQuestionScreen() {
                     return (
                       <div
                         key={alt.id}
-                        className={`flex items-center gap-3 p-3.5 rounded-xl border transition-all duration-150 ${
-                          isSelected
-                            ? 'border-emerald-500 bg-emerald-50/20 dark:bg-emerald-950/20 shadow-2xs ring-1 ring-emerald-500/30'
-                            : 'border-border bg-card hover:border-border/80'
-                        }`}
+                        className={`flex items-center gap-3 p-3.5 rounded-xl border transition-all duration-150 ${isSelected
+                          ? 'border-emerald-500 bg-emerald-50/20 dark:bg-emerald-950/20 shadow-2xs ring-1 ring-emerald-500/30'
+                          : 'border-border bg-card hover:border-border/80'
+                          }`}
                       >
                         <GripVertical className="w-4 h-4 text-muted-foreground/40 shrink-0 cursor-grab active:cursor-grabbing" />
 
-                        {/* Radio Button */}
                         <button
                           type="button"
                           onClick={() => setCorretaId(alt.id)}
@@ -280,15 +299,12 @@ export default function CreateQuestionScreen() {
             </div>
           </div>
 
-          {/* Right Column (Settings & Next Step) */}
           <div className="space-y-6">
-            {/* Card: Configurações */}
             <div className="bg-card border border-border rounded-2xl p-6 shadow-xs space-y-5">
               <h2 className="text-sm font-semibold text-foreground">
                 Configurações
               </h2>
 
-              {/* Tipo */}
               <div className="space-y-1.5">
                 <label className="block text-xs font-medium text-foreground">
                   Tipo
@@ -313,7 +329,6 @@ export default function CreateQuestionScreen() {
                 </p>
               </div>
 
-              {/* Disciplina */}
               <div className="space-y-1.5">
                 <label className="block text-xs font-medium text-foreground">
                   Disciplina
@@ -338,7 +353,29 @@ export default function CreateQuestionScreen() {
                 </div>
               </div>
 
-              {/* Peso */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-medium text-foreground">
+                  Dificuldade
+                </label>
+                <div className="relative">
+                  <select
+                    value={dificuldade}
+                    onChange={(e) => setDificuldade(e.target.value)}
+                    className="w-full border border-input rounded-xl px-3.5 py-2.5 text-sm bg-background text-foreground outline-none focus:ring-2 focus:ring-primary appearance-none pr-8 cursor-pointer"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'right 0.75rem center',
+                      backgroundSize: '1em',
+                    }}
+                  >
+                    <option value="Fácil">Fácil</option>
+                    <option value="Médio">Médio</option>
+                    <option value="Difícil">Difícil</option>
+                  </select>
+                </div>
+              </div>
+
               <div className="space-y-1.5">
                 <label className="block text-xs font-medium text-foreground">
                   Peso
@@ -357,9 +394,56 @@ export default function CreateQuestionScreen() {
                   </span>
                 </div>
               </div>
+
+              <div className="space-y-2">
+                <label className="block text-xs font-medium text-foreground">
+                  Tags (Tópicos da Matéria)
+                </label>
+
+                <div className="flex flex-wrap gap-1.5 min-h-[26px]">
+                  {tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center gap-1 text-xs font-medium text-blue-700 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 px-2 py-0.5 rounded-md"
+                    >
+                      {tag}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveTag(tag)}
+                        className="hover:text-red-500 transition-colors cursor-pointer"
+                        title="Remover tag"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-1.5">
+                  <input
+                    type="text"
+                    value={tagInput}
+                    onChange={(e) => setTagInput(e.target.value)}
+                    onKeyDown={handleKeyDownTag}
+                    placeholder="Adicionar tag (ex: #SQL, #POO)"
+                    className="flex-1 border border-input rounded-xl px-3 py-1.5 text-xs bg-background text-foreground outline-none focus:ring-1 focus:ring-primary"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleAddTag}
+                    className="h-8 px-2.5 text-xs rounded-xl cursor-pointer"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                  </Button>
+                </div>
+                <p className="text-[11px] text-muted-foreground">
+                  Pressione Enter ou clique no + para adicionar.
+                </p>
+              </div>
             </div>
 
-            {/* Card: Próxima etapa */}
             <div className="bg-sky-50 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-800/60 rounded-2xl p-5 flex items-start gap-3.5">
               <div className="p-1 rounded-full bg-sky-100 dark:bg-sky-900/60 text-sky-600 dark:text-sky-300 shrink-0 mt-0.5">
                 <HelpCircle className="w-4 h-4" />

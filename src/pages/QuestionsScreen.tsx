@@ -67,7 +67,6 @@ export default function QuestionsScreen() {
     })
   }, [questions, searchTerm, filtroDisciplina, filtroDificuldade, filtroTipo])
 
-  // Drag and Drop handlers
   const handleDragStart = (e: React.DragEvent, questao: QuestaoFrontEndDTO) => {
     e.dataTransfer.setData('application/json', JSON.stringify(questao))
   }
@@ -89,7 +88,6 @@ export default function QuestionsScreen() {
     }
   }
 
-  // Question management
   const addToExam = (questao: QuestaoFrontEndDTO) => {
     if (!examQuestions.find((q) => q.idQuestao === questao.idQuestao)) {
       setExamQuestions((prev) => [...prev, questao])
@@ -102,7 +100,6 @@ export default function QuestionsScreen() {
     setExamQuestions((prev) => prev.filter((q) => q.idQuestao !== idQuestao))
   }
 
-  // Publishing
   const handlePublish = () => {
     if (!tituloProva.trim()) {
       toast.warning('Dê um título para a prova antes de publicar.')
@@ -116,11 +113,16 @@ export default function QuestionsScreen() {
     const payload = {
       titulo: tituloProva.trim(),
       disciplina: examQuestions[0]?.categoria || 'AED-301',
+      categoria: examQuestions[0]?.categoria || 'AED-301',
       questoes: examQuestions.map((q) => ({
         idQuestao: String(q.idQuestao),
         categoria: q.categoria,
+        disciplina: q.categoria,
         dificuldade: q.dificuldade,
         enunciado: q.enunciado,
+        tipo: q.tipo || (q.categoria.includes('ENG') ? 'Discursiva' : 'Múltipla Escolha'),
+        peso: q.peso || 1,
+        tags: q.tags && q.tags.length > 0 ? q.tags : [`#${q.categoria}`],
         alternativas: q.alternativas,
         alternativaCorreta:
           q.alternativaCorreta ||
@@ -151,9 +153,7 @@ export default function QuestionsScreen() {
       <Toaster position="top-right" richColors />
 
       <div className="flex flex-1 h-full w-full overflow-hidden">
-        {/* Left Side: Question Bank */}
         <div className="flex-1 flex flex-col min-w-0">
-          {/* Header & Controls matching Image 1 */}
           <div className="px-6 pt-6 pb-4 border-b border-border bg-background space-y-4">
             <div className="flex items-center justify-between gap-4">
               <div>
@@ -178,7 +178,6 @@ export default function QuestionsScreen() {
               </Button>
             </div>
 
-            {/* Search Input */}
             <div className="relative">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
@@ -190,7 +189,6 @@ export default function QuestionsScreen() {
               />
             </div>
 
-            {/* Filter Dropdowns */}
             <QuestionFilters
               disciplina={filtroDisciplina}
               dificuldade={filtroDificuldade}
@@ -201,7 +199,6 @@ export default function QuestionsScreen() {
             />
           </div>
 
-          {/* Questions List */}
           <div className="flex-1 overflow-y-auto p-6 space-y-3">
             {isLoading ? (
               <div className="text-muted-foreground text-sm py-4">
@@ -228,7 +225,6 @@ export default function QuestionsScreen() {
           </div>
         </div>
 
-        {/* Right Side: Exam Builder */}
         <ExamDraftPanel
           examQuestions={examQuestions}
           tituloProva={tituloProva}
